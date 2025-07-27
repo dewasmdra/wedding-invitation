@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>Wedding Invitation Yatno & Adinda</title>
+    <style>
+      html,
+      body,
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        height: 100%;
+        overflow: hidden;
+      }
+
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #333;
+        position: fixed;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="w-md bg-[#9a2828] text-[#fff0b4] relative overflow-hidden"
+      style="height: 100vh; max-height: 100vh"
+    >
+      <!-- Gambar -->
+      <div class="absolute inset-0 w-full h-full">
+        <img
+          src="bg-merah.png"
+          alt="Background"
+          class="w-full h-full object-cover"
+        />
+      </div>
+
+      <!-- Teks Wedding Invitation -->
+      <div
+        class="absolute top-27 left-1/2 transform -translate-x-1/2 text-center"
+      >
+        <h1
+          class="text-xl font-bold tracking-widest text-[#fff0b4] text-nowrap"
+        >
+          WEDDING INVITATION
+        </h1>
+      </div>
+
+      <!-- Nama YATNO di sisi kiri -->
+      <div
+        class="absolute left-4 top-75 transform -translate-y-1/2 origin-center"
+      >
+        <h2 class="text-lg font-semibold tracking-widest text-[#fff0b4]">
+          YATNO
+        </h2>
+      </div>
+
+      <!-- Nama DINDA di sisi kanan -->
+      <div
+        class="absolute right-4 top-75 transform -translate-y-1/2 origin-center"
+      >
+        <h2 class="text-lg font-semibold tracking-widest text-[#fff0b4]">
+          DINDA
+        </h2>
+      </div>
+
+      <!-- Teks Kepada -->
+      <div
+        class="absolute bottom-40 left-1/2 transform -translate-x-1/2 text-center"
+      >
+        <p class="text-sm font-medium text-[#fff0b4] mb-2">
+          Kepada Bapak/Ibu/Saudara/i :
+        </p>
+        <h3 class="text-lg font-bold tracking-wide text-[#fff0b4]">
+          NAMA TAMU
+        </h3>
+      </div>
+    </div>
+  </body>
+</html>
