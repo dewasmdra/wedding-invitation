@@ -2,88 +2,515 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Wedding Invitation Yatno & Adinda</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <title>Undangan Pernikahan</title>
     <style>
-      html,
-      body,
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
       html,
       body {
         height: 100%;
-        overflow: hidden;
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden !important;
+        background: #000;
+        touch-action: none;
+        overscroll-behavior: none;
+        -webkit-overflow-scrolling: auto;
+        scrollbar-width: none;
       }
-
-      body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background-color: #333;
-        position: fixed;
-        width: 100%;
+      body::-webkit-scrollbar,
+      html::-webkit-scrollbar {
+        display: none;
+      }
+      video {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+        background: #000;
+        display: block;
+      }
+      @media (min-width: 600px) {
+        body::before {
+          content: "Mohon buka undangan ini di perangkat mobile.";
+          color: #fff;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: #000c;
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 2em;
+          text-align: center;
+        }
+        main#invitation-sections {
+          display: none;
+        }
       }
     </style>
   </head>
   <body>
-    <div
-      class="w-md bg-[#9a2828] text-[#fff0b4] relative overflow-hidden"
-      style="height: 100vh; max-height: 100vh"
-    >
-      <!-- Gambar -->
-      <div class="absolute inset-0 w-full h-full">
-        <img
-          src="bg-merah.png"
-          alt="Background"
-          class="w-full h-full object-cover"
-        />
-      </div>
-
-      <!-- Teks Wedding Invitation -->
-      <div
-        class="absolute top-27 left-1/2 transform -translate-x-1/2 text-center"
+    <main id="invitation-sections">
+      <section class="frame-section" id="frame-1">
+        <video
+          src="frame.mp4"
+          id="video1"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </section>
+      <section class="frame-section" id="frame-2" style="display: none">
+        <video
+          src="frame2.mp4"
+          id="video2"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+          loop
+        ></video>
+      </section>
+      <section class="frame-section" id="frame-3" style="display: none">
+        <video
+          src="frame3.mp4"
+          id="video3"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+          loop
+        ></video>
+      </section>
+      <section
+        class="frame-section"
+        id="frame-4"
+        style="display: none; position: relative"
       >
-        <h1
-          class="text-xl font-bold tracking-widest text-[#fff0b4] text-nowrap"
+        <video
+          src="frame4.mp4"
+          id="video4"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+        <div
+          id="countdown"
+          style="
+            position: absolute;
+            z-index: 2;
+            bottom: 20%;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-size: 2.5em;
+            font-family: sans-serif;
+            text-shadow: 0 2px 8px #000;
+            letter-spacing: 2px;
+            display: flex;
+            justify-content: center;
+            gap: 0.7em;
+            flex-wrap: wrap;
+          "
         >
-          WEDDING INVITATION
-        </h1>
-      </div>
-
-      <!-- Nama YATNO di sisi kiri -->
-      <div
-        class="absolute left-4 top-75 transform -translate-y-1/2 origin-center"
+          <div
+            style="display: flex; flex-direction: column; align-items: center"
+          >
+            <span id="days" style="font-size: 1em; font-weight: bold">00</span>
+            <span style="font-size: 0.4em; margin-top: -0.2em">HARI</span>
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: center ju;
+            "
+          >
+            <span
+              id="hours"
+              style="font-size: 1em; font-weight: bold; margin-left: 5px"
+              >00</span
+            >
+            <span style="font-size: 0.4em; margin-top: -0.2em; margin-left: 5px"
+              >JAM</span
+            >
+          </div>
+          <div
+            style="display: flex; flex-direction: column; align-items: center"
+          >
+            <span
+              id="minutes"
+              style="font-size: 1em; font-weight: bold; margin-left: 5px"
+              >00</span
+            >
+            <span style="font-size: 0.4em; margin-top: -0.2em; margin-left: 8px"
+              >MENIT</span
+            >
+          </div>
+          <div
+            style="display: flex; flex-direction: column; align-items: center"
+          >
+            <span id="seconds" style="font-size: 1em; font-weight: bold"
+              >00</span
+            >
+            <span style="font-size: 0.4em; margin-top: -0.2em">DETIK</span>
+          </div>
+        </div>
+      </section>
+      <section class="frame-section" id="frame-5" style="display: none">
+        <video
+          src="frame5.mp4"
+          id="video5"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </section>
+      <section class="frame-section" id="frame-6" style="display: none">
+        <video
+          src="frame6.mp4"
+          id="video6"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </section>
+      <section class="frame-section" id="frame-7" style="display: none">
+        <video
+          src="frame7.mp4"
+          id="video7"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </section>
+      <section
+        class="frame-section"
+        id="frame-8"
+        style="display: none; position: relative"
       >
-        <h2 class="text-lg font-semibold tracking-widest text-[#fff0b4]">
-          YATNO
-        </h2>
-      </div>
-
-      <!-- Nama DINDA di sisi kanan -->
-      <div
-        class="absolute right-4 top-75 transform -translate-y-1/2 origin-center"
+        <video
+          src="frame8.mp4"
+          id="video8"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+        <a
+          href="https://maps.app.goo.gl/EYmAUsSa9VuHvsRW9"
+          target="_blank"
+          style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50%;
+            height: 35%;
+            z-index: 2;
+            display: block;
+          "
+        ></a>
+      </section>
+      <section
+        class="frame-section"
+        id="frame-9"
+        style="display: none; position: relative"
       >
-        <h2 class="text-lg font-semibold tracking-widest text-[#fff0b4]">
-          DINDA
-        </h2>
-      </div>
+        <video
+          src="frame9.mp4"
+          id="video9"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+        <a
+          href="https://maps.app.goo.gl/EYmAUsSa9VuHvsRW9"
+          target="_blank"
+          style="
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            display: block;
+          "
+        ></a>
+      </section>
+      <section class="frame-section" id="frame-10" style="display: none">
+        <video
+          src="frame10.mp4"
+          id="video10"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </section>
+      <section class="frame-section" id="frame-11" style="display: none">
+        <video
+          src="frame11.mp4"
+          id="video11"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </section>
+      <section class="frame-section" id="frame-12" style="display: none">
+        <video
+          src="frame12.mp4"
+          id="video12"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </section>
+      <section class="frame-section" id="frame-13" style="display: none">
+        <video
+          src="frame13.mp4"
+          id="video13"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </section>
+      <section class="frame-section" id="frame-14" style="display: none">
+        <video
+          src="frame14.mp4"
+          id="video14"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </section>
+      <section class="frame-section" id="frame-15" style="display: none">
+        <video
+          src="frame15.mp4"
+          id="video15"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </section>
+      <section class="frame-section" id="frame-16" style="display: none">
+        <video
+          src="frame16.mp4"
+          id="video16"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </section>
+      <section class="frame-section" id="frame-17" style="display: none">
+        <video
+          src="frame17.mp4"
+          id="video17"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </section>
+      <section class="frame-section" id="frame-18" style="display: none">
+        <video
+          src="frame18.mp4"
+          id="video18"
+          playsinline
+          webkit-playsinline
+          preload="auto"
+        ></video>
+      </section>
+    </main>
+    <style>
+      .frame-section {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .frame-section video {
+        width: 100vw;
+        height: 100vh;
+        object-fit: cover;
+      }
+    </style>
+    <script>
+      // Navigasi antar section/frame
+      const sections = [
+        document.getElementById("frame-1"),
+        document.getElementById("frame-2"),
+        document.getElementById("frame-3"),
+        document.getElementById("frame-4"),
+        document.getElementById("frame-5"),
+        document.getElementById("frame-6"),
+        document.getElementById("frame-7"),
+        document.getElementById("frame-8"),
+        document.getElementById("frame-9"),
+        document.getElementById("frame-10"),
+        document.getElementById("frame-11"),
+        document.getElementById("frame-12"),
+        document.getElementById("frame-13"),
+        document.getElementById("frame-14"),
+        document.getElementById("frame-15"),
+        document.getElementById("frame-16"),
+        document.getElementById("frame-17"),
+        document.getElementById("frame-18"),
+      ];
+      const videos = [
+        document.getElementById("video1"),
+        document.getElementById("video2"),
+        document.getElementById("video3"),
+        document.getElementById("video4"),
+        document.getElementById("video5"),
+        document.getElementById("video6"),
+        document.getElementById("video7"),
+        document.getElementById("video8"),
+        document.getElementById("video9"),
+        document.getElementById("video10"),
+        document.getElementById("video11"),
+        document.getElementById("video12"),
+        document.getElementById("video13"),
+        document.getElementById("video14"),
+        document.getElementById("video15"),
+        document.getElementById("video16"),
+        document.getElementById("video17"),
+        document.getElementById("video18"),
+      ];
+      let currentSection = 0;
 
-      <!-- Teks Kepada -->
-      <div
-        class="absolute bottom-40 left-1/2 transform -translate-x-1/2 text-center"
-      >
-        <p class="text-sm font-medium text-[#fff0b4] mb-2">
-          Kepada Bapak/Ibu/Saudara/i :
-        </p>
-        <h3 class="text-lg font-bold tracking-wide text-[#fff0b4]">
-          NAMA TAMU
-        </h3>
-      </div>
-    </div>
+      // Frame 1: tunggu klik pada video
+      videos[0].addEventListener("play", () => {
+        videos[0].addEventListener(
+          "click",
+          () => {
+            goToSection(1);
+          },
+          { once: true }
+        );
+      });
+
+      // Fungsi scroll/swipe untuk frame2 (hanya bisa lanjut ke frame3)
+      function enableScrollToContinueForward(targetSection) {
+        let startY = null;
+        function onTouchStart(e) {
+          startY = e.touches ? e.touches[0].clientY : e.clientY;
+        }
+        function onTouchEnd(e) {
+          let endY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+          if (startY !== null && startY - endY > 50) {
+            removeScrollListeners();
+            goToSection(targetSection);
+          }
+        }
+        function onWheel(e) {
+          if (e.deltaY > 30) {
+            removeScrollListeners();
+            goToSection(targetSection);
+          }
+        }
+        function removeScrollListeners() {
+          window.removeEventListener("touchstart", onTouchStart);
+          window.removeEventListener("touchend", onTouchEnd);
+          window.removeEventListener("wheel", onWheel);
+        }
+        window.addEventListener("touchstart", onTouchStart);
+        window.addEventListener("touchend", onTouchEnd);
+        window.addEventListener("wheel", onWheel);
+      }
+
+      // Fungsi scroll/swipe untuk frame3 sampai frame18 (bisa maju/mundur)
+      function enableScrollToNavigate(idx) {
+        let startY = null;
+        function onTouchStart(e) {
+          startY = e.touches ? e.touches[0].clientY : e.clientY;
+        }
+        function onTouchEnd(e) {
+          let endY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+          if (startY !== null && Math.abs(endY - startY) > 50) {
+            removeScrollListeners();
+            if (startY > endY && idx < sections.length - 1) {
+              goToSection(idx + 1); // scroll down
+            } else if (startY < endY && idx > 1) {
+              goToSection(idx - 1); // scroll up (tidak bisa ke frame1)
+            }
+          }
+        }
+        function onWheel(e) {
+          if (e.deltaY > 30 && idx < sections.length - 1) {
+            removeScrollListeners();
+            goToSection(idx + 1);
+          } else if (e.deltaY < -30 && idx > 1) {
+            removeScrollListeners();
+            goToSection(idx - 1);
+          }
+        }
+        function removeScrollListeners() {
+          window.removeEventListener("touchstart", onTouchStart);
+          window.removeEventListener("touchend", onTouchEnd);
+          window.removeEventListener("wheel", onWheel);
+        }
+        window.addEventListener("touchstart", onTouchStart);
+        window.addEventListener("touchend", onTouchEnd);
+        window.addEventListener("wheel", onWheel);
+      }
+
+      function goToSection(idx) {
+        if (idx < 0 || idx >= sections.length) return;
+        sections[currentSection].style.display = "none";
+        videos[currentSection].pause();
+        currentSection = idx;
+        sections[currentSection].style.display = "flex";
+        videos[currentSection].currentTime = 0;
+        videos[currentSection].play();
+        // Frame2: hanya bisa lanjut ke frame3 (tidak bisa mundur)
+        if (currentSection === 1) {
+          enableScrollToContinueForward(2);
+          // Frame3 sampai frame17: bisa maju/mundur dengan scroll/swipe
+        } else if (currentSection > 1 && currentSection < sections.length - 1) {
+          enableScrollToNavigate(currentSection);
+        }
+      }
+
+      // Autoplay frame pertama
+      sections.forEach((s, i) => {
+        if (i !== 0) s.style.display = "none";
+      });
+      videos[0].play();
+      // Countdown pada frame-4
+      // Ganti tanggal di bawah sesuai tanggal acara (format: YYYY-MM-DDTHH:MM:SS)
+      const countdownTarget = new Date("2025-08-10T10:00:00");
+      const daysSpan = document.getElementById("days");
+      const hoursSpan = document.getElementById("hours");
+      const minutesSpan = document.getElementById("minutes");
+      const secondsSpan = document.getElementById("seconds");
+
+      function updateCountdown() {
+        const now = new Date();
+        let diff = Math.max(0, countdownTarget - now);
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        diff -= days * (1000 * 60 * 60 * 24);
+        const hours = Math.floor(diff / (1000 * 60 * 60));
+        diff -= hours * (1000 * 60 * 60);
+        const minutes = Math.floor(diff / (1000 * 60));
+        diff -= minutes * (1000 * 60);
+        const seconds = Math.floor(diff / 1000);
+
+        daysSpan.textContent = days.toString().padStart(2, "0");
+        hoursSpan.textContent = hours.toString().padStart(2, "0");
+        minutesSpan.textContent = minutes.toString().padStart(2, "0");
+        secondsSpan.textContent = seconds.toString().padStart(2, "0");
+      }
+      setInterval(updateCountdown, 1000);
+      updateCountdown();
+    </script>
   </body>
 </html>
