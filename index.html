@@ -95,6 +95,14 @@
           transform: translateZ(0);
         }
 
+        /* Override appearance for radio buttons to make them visible */
+        input[type="radio"] {
+          -webkit-appearance: radio !important;
+          appearance: radio !important;
+          width: auto !important;
+          height: auto !important;
+        }
+
         /* Optimize animations */
         .frame-section {
           -webkit-backface-visibility: hidden;
@@ -141,6 +149,38 @@
         main#invitation-sections {
           display: none;
         }
+      }
+
+      /* Pastikan radio button terlihat */
+      input[type="radio"] {
+        -webkit-appearance: radio !important;
+        appearance: radio !important;
+        width: 12px !important;
+        height: 12px !important;
+        border: 2px solid #9a2828 !important;
+        border-radius: 50% !important;
+        background: white !important;
+        margin-right: 6px !important;
+        flex-shrink: 0 !important;
+        position: relative !important;
+      }
+
+      input[type="radio"]:checked {
+        background: #9a2828 !important;
+        border-color: #9a2828 !important;
+      }
+
+      input[type="radio"]:checked::before {
+        content: "";
+        display: block;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: white;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
       }
     </style>
   </head>
@@ -657,18 +697,23 @@
                 display: flex;
                 align-items: center;
                 color: #9a2828;
-                font-size: 8px;
+                font-size: 12px;
                 font-family: sans-serif;
                 text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
                 cursor: pointer;
-                margin-bottom: 5px;
+                margin-bottom: 8px;
               "
             >
               <input
                 type="radio"
                 name="kehadiran"
                 value="hadir, 1 orang"
-                style="margin-right: 5px; transform: scale(1.2)"
+                style="
+                  margin-right: 6px;
+                  transform: scale(1);
+                  -webkit-appearance: radio !important;
+                  appearance: radio !important;
+                "
               />
               Hadir (1 orang)
             </label>
@@ -677,18 +722,23 @@
                 display: flex;
                 align-items: center;
                 color: #9a2828;
-                font-size: 8px;
+                font-size: 12px;
                 font-family: sans-serif;
                 text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
                 cursor: pointer;
-                margin-bottom: 5px;
+                margin-bottom: 8px;
               "
             >
               <input
                 type="radio"
                 name="kehadiran"
                 value="hadir, lebih dari 1 orang"
-                style="margin-right: 5px; transform: scale(1.2)"
+                style="
+                  margin-right: 6px;
+                  transform: scale(1);
+                  -webkit-appearance: radio !important;
+                  appearance: radio !important;
+                "
               />
               Hadir (lebih dari 1 orang)
             </label>
@@ -697,7 +747,7 @@
                 display: flex;
                 align-items: center;
                 color: #9a2828;
-                font-size: 8px;
+                font-size: 12px;
                 font-family: sans-serif;
                 text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
                 cursor: pointer;
@@ -707,7 +757,12 @@
                 type="radio"
                 name="kehadiran"
                 value="tidak hadir"
-                style="margin-right: 5px; transform: scale(1.2)"
+                style="
+                  margin-right: 6px;
+                  transform: scale(1);
+                  -webkit-appearance: radio !important;
+                  appearance: radio !important;
+                "
               />
               Tidak Hadir
             </label>
@@ -1352,112 +1407,71 @@
       };
     </script>
     <script>
-      // Universal Global Storage System (Optimized for Mobile)
-      let globalHopesData = [];
+      // GANTI URL DI BAWAH INI DENGAN URL ENDPOINT ANDA DARI SHEETY
+      const sheetyURL =
+        "https://api.sheety.co/e97cba70fbd5876af01e762485b8bdf8/weddingConfirmation/sheet1"; // << GANTI INI
 
-      // Generate unique ID
-      function generateUniqueId() {
-        return Date.now().toString(36) + Math.random().toString(36).substr(2);
-      }
+      // --- FUNGSI BARU UNTUK MENGAMBIL DATA DARI SHEET (GET) ---
+      async function loadHopesFromSheet() {
+        const hopesListElement = document.getElementById("hopes-list");
+        hopesListElement.innerHTML = `<p style="color: #9a2828; font-size: 10px; text-align: center;">Memuat harapan...</p>`;
 
-      // Save data to global system with mobile optimization
-      async function saveGlobalData(hopeData) {
         try {
-          globalHopesData.push(hopeData);
-
-          // For mobile optimization, limit stored data
-          if (globalHopesData.length > 100) {
-            globalHopesData = globalHopesData.slice(-100); // Keep only last 100
+          const response = await fetch(sheetyURL);
+          if (!response.ok) {
+            throw new Error(`Gagal memuat data: ${response.status}`);
           }
+          const data = await response.json();
 
-          // Simulate saving to server (dalam implementasi nyata, gunakan API)
-          localStorage.setItem(
-            "global-wedding-hopes",
-            JSON.stringify(globalHopesData)
-          );
-          console.log("Data saved to global system");
-          return true;
+          // 'sheet1' harus sesuai dengan nama sheet Anda di Sheety
+          const hopes = data.sheet1 || [];
+
+          // Panggil fungsi untuk menampilkan data
+          updateDisplay(hopes);
         } catch (error) {
-          console.error("Error saving to global system:", error);
-          throw error;
+          console.error("Error mengambil data dari Sheety:", error);
+          hopesListElement.innerHTML = `<p style="color: #9a2828; font-size: 10px; text-align: center;">Gagal memuat harapan.</p>`;
         }
       }
 
-      // Load data from global system
-      async function loadGlobalData() {
-        try {
-          const savedData = localStorage.getItem("global-wedding-hopes");
-          if (savedData) {
-            globalHopesData = JSON.parse(savedData);
-          }
-          return globalHopesData;
-        } catch (error) {
-          console.error("Error loading from global system:", error);
-          return [];
-        }
-      }
-
-      // Update display dengan performance optimization
-      function updateDisplay() {
+      // --- FUNGSI YANG DIMODIFIKASI UNTUK MENAMPILKAN DATA ---
+      function updateDisplay(hopesData = []) {
         const counterElement = document.getElementById("counter-number");
         const hopesListElement = document.getElementById("hopes-list");
 
         if (counterElement) {
-          counterElement.textContent = globalHopesData.length;
+          counterElement.textContent = hopesData.length;
         }
 
         if (hopesListElement) {
-          if (globalHopesData.length === 0) {
+          if (hopesData.length === 0) {
             hopesListElement.innerHTML = `
-              <p style="
-                color: #9a2828;
-                font-size: 10px;
-                font-family: sans-serif;
-                text-align: center;
-                margin: 0;
-                font-style: italic;
-              ">Belum ada harapan yang ditulis</p>
-            `;
-          } else {
-            // Untuk mobile, tampilkan maksimal 50 harapan terakhir
-            const displayData = isMobile
-              ? globalHopesData.slice(-50)
-              : globalHopesData;
-            hopesListElement.innerHTML = displayData
-              .map(
-                (hope, index) => `
-              <div style="
-                background: rgba(154, 40, 40, 0.1);
-                border-radius: 5px;
-                padding: 8px;
-                margin-bottom: 8px;
-                border-left: 3px solid rgba(154, 40, 40, 0.5);
-              ">
-                <p style="
-                  color: #9a2828;
-                  font-size: 9px;
-                  font-family: sans-serif;
-                  margin: 0 0 3px 0;
-                  font-weight: bold;
-                  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-                ">${hope.name}</p>
-                <p style="
-                  color: #b73838;
-                  font-size: 8px;
-                  font-family: sans-serif;
-                  margin: 0;
-                  line-height: 1.3;
-                  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-                ">${hope.message}</p>
-              </div>
-            `
-              )
-              .join("");
+            <p style="color: #9a2828; font-size: 10px; text-align: center; font-style: italic;">Belum ada harapan yang ditulis</p>
+          `;
+            return;
           }
+
+          // Ambil 50 data terakhir dan balik urutannya agar yang terbaru di atas
+          const displayData = hopesData.slice(-50).reverse();
+
+          hopesListElement.innerHTML = displayData
+            .map(
+              (hope) => `
+          <div style="background: rgba(154, 40, 40, 0.1); border-radius: 5px; padding: 8px; margin-bottom: 8px; border-left: 3px solid rgba(154, 40, 40, 0.5);">
+            <p style="color: #9a2828; font-size: 9px; font-weight: bold; margin: 0 0 3px 0;">${
+              hope.nama || "Anonim"
+            }</p>
+            <p style="color: #b73838; font-size: 8px; line-height: 1.3; margin: 0;">${
+              hope.harapan || ""
+            }</p>
+          </div>
+        `
+            )
+            .join("");
         }
       }
 
-      // Optimized submit function
+      // --- FUNGSI PENGIRIMAN DATA (POST) YANG SUDAH ADA ---
       async function submitData() {
         const nameInput = document.getElementById("frame16-input");
         const hopeInput = document.getElementById("frame16-input-2");
@@ -1466,72 +1480,58 @@
         );
         const submitBtn = document.getElementById("submit-btn");
 
-        // Validation
-        if (!nameInput.value.trim()) {
-          alert("Mohon isi nama Anda!");
-          nameInput.focus();
+        if (
+          !nameInput.value.trim() ||
+          !hopeInput.value.trim() ||
+          !attendanceRadio
+        ) {
+          alert(
+            "Mohon lengkapi semua isian: Nama, Harapan, dan Konfirmasi Kehadiran."
+          );
           return;
         }
 
-        if (!hopeInput.value.trim()) {
-          alert("Mohon isi harapan Anda!");
-          hopeInput.focus();
-          return;
-        }
-
-        if (!attendanceRadio) {
-          alert("Mohon pilih konfirmasi kehadiran!");
-          return;
-        }
-
-        // Loading state
         const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = "⏳ Menyimpan Global...";
-        submitBtn.style.background =
-          "linear-gradient(135deg, #f59e0b, #d97706)";
+        submitBtn.innerHTML = "⏳ Mengirim...";
         submitBtn.disabled = true;
 
-        // Create hope data
-        const newHope = {
-          id: generateUniqueId(),
-          name: nameInput.value.trim(),
-          message: hopeInput.value.trim(),
-          attendance: attendanceRadio.value,
-          timestamp: new Date().toISOString(),
-          deviceInfo: {
-            userAgent: navigator.userAgent.substr(0, 100),
-            platform: navigator.platform,
-            isMobile: isMobile,
+        // 'sheet1' harus sama dengan nama tab di Google Sheet Anda
+        let dataToSend = {
+          sheet1: {
+            nama: nameInput.value.trim(),
+            harapan: hopeInput.value.trim(),
+            konfirmasi: attendanceRadio.value,
+            tanggal: new Date().toLocaleString("id-ID"),
           },
         };
 
         try {
-          await saveGlobalData(newHope);
+          const response = await fetch(sheetyURL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(dataToSend),
+          });
 
-          // Update display
-          updateDisplay();
+          if (!response.ok)
+            throw new Error(`HTTP error! status: ${response.status}`);
 
-          // Success feedback
-          submitBtn.innerHTML = "✅ Tersimpan Global!";
+          submitBtn.innerHTML = "✅ Terkirim!";
           submitBtn.style.background =
             "linear-gradient(135deg, #22c55e, #16a34a)";
 
-          // Reset form
           nameInput.value = "";
           hopeInput.value = "";
           attendanceRadio.checked = false;
 
-          console.log("Hope saved successfully to global system!");
+          // **PENTING: Muat ulang data harapan setelah berhasil mengirim**
+          await loadHopesFromSheet();
         } catch (error) {
-          console.error("Error saving hope:", error);
-
-          // Error feedback
+          console.error("Error mengirim data ke Sheety:", error);
           submitBtn.innerHTML = "❌ Gagal! Coba Lagi";
           submitBtn.style.background =
             "linear-gradient(135deg, #dc2626, #b91c1c)";
         }
 
-        // Reset button
         setTimeout(() => {
           submitBtn.innerHTML = originalText;
           submitBtn.style.background =
@@ -1540,14 +1540,9 @@
         }, 3000);
       }
 
-      // Load data on page load
-      document.addEventListener("DOMContentLoaded", async function () {
-        try {
-          await loadGlobalData();
-          updateDisplay();
-        } catch (error) {
-          console.error("Error loading data:", error);
-        }
+      // --- MEMANGGIL FUNGSI SAAT HALAMAN SELESAI DIMUAT ---
+      document.addEventListener("DOMContentLoaded", function () {
+        loadHopesFromSheet(); // Memuat data dari Sheet saat pertama kali halaman dibuka
       });
     </script>
   </body>
