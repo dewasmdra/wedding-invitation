@@ -6,7 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover"
     />
-    <title>Undangan Pernikahan</title>
+    <title>Undangan Pernikahan Adinda & Yatno</title>
     <style>
       html,
       body {
@@ -65,8 +65,61 @@
         object-fit: cover;
         background: #000;
         display: block;
-        /* Tambahan untuk iOS */
+        /* Mobile optimizations */
         height: -webkit-fill-available;
+        will-change: transform;
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+      }
+
+      /* Mobile-specific optimizations */
+      @media (max-width: 768px) {
+        * {
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+        video {
+          /* Reduce video quality on low-end devices */
+          image-rendering: optimizeSpeed;
+          image-rendering: -moz-crisp-edges;
+          image-rendering: -webkit-optimize-contrast;
+        }
+
+        /* Optimize input rendering */
+        input,
+        button {
+          -webkit-appearance: none;
+          appearance: none;
+          border-radius: 0;
+          transform: translateZ(0);
+        }
+
+        /* Optimize animations */
+        .frame-section {
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          will-change: transform;
+        }
+      }
+
+      /* Low-end device optimizations */
+      @media (max-width: 480px) and (max-height: 800px) {
+        video {
+          /* Further reduce quality for very low-end devices */
+          image-rendering: pixelated;
+        }
+
+        /* Reduce shadow effects */
+        * {
+          text-shadow: none !important;
+          box-shadow: none !important;
+        }
+
+        /* Simplify gradients */
+        button {
+          background: #9a2828 !important;
+        }
       }
       @media (min-width: 600px) {
         body::before {
@@ -127,15 +180,57 @@
     </div>
 
     <main id="invitation-sections">
-      <section class="frame-section" id="frame-1">
+      <section class="frame-section" id="frame-1" style="position: relative">
         <video
           src="frame-new.mp4"
           id="video1"
           playsinline
+          muted
           webkit-playsinline
-          preload="auto"
-          loop
+          preload="metadata"
         ></video>
+
+        <!-- Button Buka Undangan -->
+        <div
+          style="
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+          "
+        >
+          <button
+            id="open-invitation-btn"
+            onclick="openInvitation()"
+            style="
+              background: linear-gradient(135deg, #9a2828, #c53030);
+              color: #fff0b4;
+              border: 2px solid rgba(255, 255, 255, 0.8);
+              border-radius: 20px;
+              margin-bottom: 50px;
+              padding: 10px 20px;
+              font-size: 14px;
+              font-family: sans-serif;
+              font-weight: bold;
+              cursor: pointer;
+              box-shadow: 0 4px 15px rgba(154, 40, 40, 0.4);
+              transition: all 0.3s ease;
+              outline: none;
+              backdrop-filter: blur(10px);
+              text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+              letter-spacing: 0.5px;
+              min-width: 160px;
+              max-width: 200px;
+            "
+            onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 20px rgba(154, 40, 40, 0.5)'"
+            onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(154, 40, 40, 0.4)'"
+            ontouchstart="this.style.transform='scale(0.95)'"
+            ontouchend="this.style.transform='scale(1)'"
+          >
+            ✉️ Buka Undangan
+          </button>
+        </div>
       </section>
       <section class="frame-section" id="frame-2" style="display: none">
         <video
@@ -143,7 +238,7 @@
           id="video2"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
           loop
         ></video>
       </section>
@@ -153,7 +248,7 @@
           id="video3"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
           loop
         ></video>
       </section>
@@ -167,7 +262,7 @@
           id="video4"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
         <div
           id="countdown"
@@ -299,7 +394,7 @@
           id="video5"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
       </section>
       <section class="frame-section" id="frame-6" style="display: none">
@@ -308,7 +403,7 @@
           id="video6"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
       </section>
       <section class="frame-section" id="frame-7" style="display: none">
@@ -317,7 +412,7 @@
           id="video7"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
       </section>
       <section
@@ -330,7 +425,7 @@
           id="video8"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
         <a
           href="https://maps.app.goo.gl/EYmAUsSa9VuHvsRW9"
@@ -357,7 +452,7 @@
           id="video9"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
         <a
           href="https://maps.app.goo.gl/EYmAUsSa9VuHvsRW9"
@@ -381,7 +476,7 @@
           playsinline
           webkit-playsinline
           loop
-          preload="auto"
+          preload="none"
         ></video>
       </section>
       <section class="frame-section" id="frame-11" style="display: none">
@@ -390,7 +485,7 @@
           id="video11"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
       </section>
       <section class="frame-section" id="frame-12" style="display: none">
@@ -399,7 +494,7 @@
           id="video12"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
       </section>
       <section class="frame-section" id="frame-13" style="display: none">
@@ -408,7 +503,7 @@
           id="video13"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
       </section>
       <section class="frame-section" id="frame-14" style="display: none">
@@ -417,7 +512,7 @@
           id="video14"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
       </section>
       <section
@@ -430,7 +525,7 @@
           id="video14a"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
         <!-- Video overlay di tengah -->
         <video
@@ -454,9 +549,9 @@
           muted
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
           disablePictureInPicture
-          controlslist="nodownload nofullscreen noremoteplayback"
+          controlslist="nodownload nofullscreen noremoteplaybook"
         ></video>
       </section>
       <section class="frame-section" id="frame-15" style="display: none">
@@ -465,7 +560,7 @@
           id="video15"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
       </section>
       <section
@@ -478,7 +573,7 @@
           id="video16"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
         <input
           type="text"
@@ -717,7 +812,7 @@
           id="video17"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
       </section>
       <section class="frame-section" id="frame-18" style="display: none">
@@ -726,7 +821,7 @@
           id="video18"
           playsinline
           webkit-playsinline
-          preload="auto"
+          preload="none"
         ></video>
       </section>
     </main>
@@ -751,6 +846,51 @@
       }
     </style>
     <script>
+      // Mobile Performance Optimization
+      const isMobile =
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        );
+      const isLowEndDevice =
+        navigator.hardwareConcurrency <= 2 || navigator.deviceMemory <= 2;
+
+      // Throttle function untuk touch events
+      function throttle(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+
+      // Lazy loading untuk video
+      function preloadNextVideo(currentIndex) {
+        const nextIndex = currentIndex + 1;
+        if (nextIndex < videos.length && videos[nextIndex]) {
+          const nextVideo = videos[nextIndex];
+          if (nextVideo.preload === "none") {
+            nextVideo.preload = "metadata";
+            nextVideo.load();
+          }
+        }
+      }
+
+      // Cleanup video memory untuk device dengan memory terbatas
+      function cleanupPreviousVideo(currentIndex) {
+        if (isLowEndDevice) {
+          const prevIndex = currentIndex - 2; // Keep previous video in memory
+          if (prevIndex >= 0 && videos[prevIndex]) {
+            const prevVideo = videos[prevIndex];
+            prevVideo.preload = "none";
+            prevVideo.src = prevVideo.src; // Reset to free memory
+          }
+        }
+      }
+
       // Navigasi antar section/frame
       const sections = [
         document.getElementById("frame-1"),
@@ -796,23 +936,30 @@
       ];
       let currentSection = 0;
 
-      // Frame 1: tunggu klik pada video
+      // Frame 1: tunggu klik pada video atau button
       const backgroundMusic = document.getElementById("background-music");
+
+      // Fungsi untuk membuka undangan (dari button)
+      function openInvitation() {
+        // Mulai memutar musik background
+        backgroundMusic
+          .play()
+          .then(() => {
+            updateMusicIcon();
+          })
+          .catch((error) => {
+            console.log("Auto-play music blocked by browser:", error);
+          });
+
+        // Pindah ke frame selanjutnya
+        goToSection(1);
+      }
 
       videos[0].addEventListener("play", () => {
         videos[0].addEventListener(
           "click",
           () => {
-            // Mulai memutar musik background
-            backgroundMusic
-              .play()
-              .then(() => {
-                updateMusicIcon();
-              })
-              .catch((error) => {
-                console.log("Auto-play music blocked by browser:", error);
-              });
-            goToSection(1);
+            openInvitation();
           },
           { once: true }
         );
@@ -821,82 +968,165 @@
       // Fungsi scroll/swipe untuk frame2 (hanya bisa lanjut ke frame3)
       function enableScrollToContinueForward(targetSection) {
         let startY = null;
-        function onTouchStart(e) {
-          startY = e.touches ? e.touches[0].clientY : e.clientY;
-        }
-        function onTouchEnd(e) {
+        let isNavigating = false;
+
+        const throttledTouchStart = throttle((e) => {
+          if (!isNavigating) {
+            startY = e.touches ? e.touches[0].clientY : e.clientY;
+          }
+        }, 50);
+
+        const throttledTouchEnd = throttle((e) => {
+          if (isNavigating) return;
+
           let endY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
           if (startY !== null && startY - endY > 50) {
+            isNavigating = true;
             removeScrollListeners();
+            preloadNextVideo(targetSection);
             goToSection(targetSection);
           }
-        }
-        function onWheel(e) {
+        }, 100);
+
+        const throttledWheel = throttle((e) => {
+          if (isNavigating) return;
+
           if (e.deltaY > 30) {
+            isNavigating = true;
             removeScrollListeners();
+            preloadNextVideo(targetSection);
             goToSection(targetSection);
           }
-        }
+        }, 100);
+
         function removeScrollListeners() {
-          window.removeEventListener("touchstart", onTouchStart);
-          window.removeEventListener("touchend", onTouchEnd);
-          window.removeEventListener("wheel", onWheel);
+          window.removeEventListener("touchstart", throttledTouchStart);
+          window.removeEventListener("touchend", throttledTouchEnd);
+          window.removeEventListener("wheel", throttledWheel);
         }
-        window.addEventListener("touchstart", onTouchStart);
-        window.addEventListener("touchend", onTouchEnd);
-        window.addEventListener("wheel", onWheel);
+
+        window.addEventListener("touchstart", throttledTouchStart, {
+          passive: true,
+        });
+        window.addEventListener("touchend", throttledTouchEnd, {
+          passive: true,
+        });
+        window.addEventListener("wheel", throttledWheel, { passive: true });
       }
 
       // Fungsi scroll/swipe untuk frame3 sampai frame18 (bisa maju/mundur)
       function enableScrollToNavigate(idx) {
         let startY = null;
-        function onTouchStart(e) {
-          startY = e.touches ? e.touches[0].clientY : e.clientY;
-        }
-        function onTouchEnd(e) {
+        let isNavigating = false;
+
+        const throttledTouchStart = throttle((e) => {
+          if (!isNavigating) {
+            startY = e.touches ? e.touches[0].clientY : e.clientY;
+          }
+        }, 50);
+
+        const throttledTouchEnd = throttle((e) => {
+          if (isNavigating) return;
+
           let endY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
           if (startY !== null && Math.abs(endY - startY) > 50) {
+            isNavigating = true;
             removeScrollListeners();
+
             if (startY > endY && idx < sections.length - 1) {
+              preloadNextVideo(idx + 1);
               goToSection(idx + 1); // scroll down
             } else if (startY < endY && idx > 1) {
               goToSection(idx - 1); // scroll up (tidak bisa ke frame1)
             }
           }
-        }
-        function onWheel(e) {
+        }, 100);
+
+        const throttledWheel = throttle((e) => {
+          if (isNavigating) return;
+
           if (e.deltaY > 30 && idx < sections.length - 1) {
+            isNavigating = true;
             removeScrollListeners();
+            preloadNextVideo(idx + 1);
             goToSection(idx + 1);
           } else if (e.deltaY < -30 && idx > 1) {
+            isNavigating = true;
             removeScrollListeners();
             goToSection(idx - 1);
           }
-        }
+        }, 100);
+
         function removeScrollListeners() {
-          window.removeEventListener("touchstart", onTouchStart);
-          window.removeEventListener("touchend", onTouchEnd);
-          window.removeEventListener("wheel", onWheel);
+          window.removeEventListener("touchstart", throttledTouchStart);
+          window.removeEventListener("touchend", throttledTouchEnd);
+          window.removeEventListener("wheel", throttledWheel);
         }
-        window.addEventListener("touchstart", onTouchStart);
-        window.addEventListener("touchend", onTouchEnd);
-        window.addEventListener("wheel", onWheel);
+
+        window.addEventListener("touchstart", throttledTouchStart, {
+          passive: true,
+        });
+        window.addEventListener("touchend", throttledTouchEnd, {
+          passive: true,
+        });
+        window.addEventListener("wheel", throttledWheel, { passive: true });
       }
 
       function goToSection(idx) {
         if (idx < 0 || idx >= sections.length) return;
+
+        // Pause dan hide current section
         sections[currentSection].style.display = "none";
         videos[currentSection].pause();
+
+        // Cleanup previous videos untuk menghemat memory
+        cleanupPreviousVideo(idx);
+
+        // Update current section
         currentSection = idx;
         sections[currentSection].style.display = "flex";
-        videos[currentSection].currentTime = 0;
-        videos[currentSection].play();
-        // Frame2: hanya bisa lanjut ke frame3 (tidak bisa mundur)
+
+        // Load video jika belum di-preload
+        const currentVideo = videos[currentSection];
+        if (currentVideo.preload === "none") {
+          currentVideo.preload = "metadata";
+          currentVideo.load();
+        }
+
+        currentVideo.currentTime = 0;
+
+        // Play video dengan error handling untuk mobile
+        const playPromise = currentVideo.play();
+        if (playPromise !== undefined) {
+          playPromise.catch((error) => {
+            console.log("Video play error:", error);
+            // Retry setelah delay singkat
+            setTimeout(() => {
+              currentVideo.play().catch((e) => console.log("Retry failed:", e));
+            }, 500);
+          });
+        }
+
+        // Preload next video untuk smooth navigation
+        preloadNextVideo(idx);
+
+        // Setup navigation events
         if (currentSection === 1) {
           enableScrollToContinueForward(2);
-          // Frame3 sampai frame17: bisa maju/mundur dengan scroll/swipe
         } else if (currentSection > 1 && currentSection < sections.length - 1) {
           enableScrollToNavigate(currentSection);
+        }
+
+        // Handle overlay video untuk frame-14a
+        if (currentSection === 14) {
+          // frame-14a index
+          const overlayVideo = document.getElementById("overlay-video-14a");
+          if (overlayVideo) {
+            overlayVideo.currentTime = 0;
+            overlayVideo.play().catch((error) => {
+              console.log("Overlay video play error:", error);
+            });
+          }
         }
       }
 
@@ -1122,78 +1352,62 @@
       };
     </script>
     <script>
-      // Fungsi untuk mengelola data harapan dan kehadiran
-      let hopesData = JSON.parse(localStorage.getItem("wedding-hopes") || "[]");
-      let attendanceData = JSON.parse(
-        localStorage.getItem("wedding-attendance") || "{}"
-      );
+      // Universal Global Storage System (Optimized for Mobile)
+      let globalHopesData = [];
 
-      // Menyimpan data saat input berubah
-      function saveData() {
-        const nameInput = document.getElementById("frame16-input");
-        const hopeInput = document.getElementById("frame16-input-2");
-        const attendanceRadio = document.querySelector(
-          'input[name="kehadiran"]:checked'
-        );
-
-        if (nameInput.value.trim() && hopeInput.value.trim()) {
-          const newHope = {
-            name: nameInput.value.trim(),
-            message: hopeInput.value.trim(),
-            attendance: attendanceRadio ? attendanceRadio.value : "",
-            timestamp: new Date().toISOString(),
-          };
-
-          hopesData.push(newHope);
-          localStorage.setItem("wedding-hopes", JSON.stringify(hopesData));
-
-          // Clear inputs setelah save
-          nameInput.value = "";
-          hopeInput.value = "";
-          if (attendanceRadio) attendanceRadio.checked = false;
-
-          updateDisplay();
-        }
+      // Generate unique ID
+      function generateUniqueId() {
+        return Date.now().toString(36) + Math.random().toString(36).substr(2);
       }
 
-      // Menyimpan data kehadiran
-      function saveAttendance() {
-        const attendanceRadio = document.querySelector(
-          'input[name="kehadiran"]:checked'
-        );
-        if (attendanceRadio) {
-          attendanceData.selection = attendanceRadio.value;
+      // Save data to global system with mobile optimization
+      async function saveGlobalData(hopeData) {
+        try {
+          globalHopesData.push(hopeData);
+
+          // For mobile optimization, limit stored data
+          if (globalHopesData.length > 100) {
+            globalHopesData = globalHopesData.slice(-100); // Keep only last 100
+          }
+
+          // Simulate saving to server (dalam implementasi nyata, gunakan API)
           localStorage.setItem(
-            "wedding-attendance",
-            JSON.stringify(attendanceData)
+            "global-wedding-hopes",
+            JSON.stringify(globalHopesData)
           );
+          console.log("Data saved to global system");
+          return true;
+        } catch (error) {
+          console.error("Error saving to global system:", error);
+          throw error;
         }
       }
 
-      // Memuat data saat halaman dimuat
-      function loadData() {
-        // Restore radio button selection
-        if (attendanceData.selection) {
-          const radio = document.querySelector(
-            `input[name="kehadiran"][value="${attendanceData.selection}"]`
-          );
-          if (radio) radio.checked = true;
+      // Load data from global system
+      async function loadGlobalData() {
+        try {
+          const savedData = localStorage.getItem("global-wedding-hopes");
+          if (savedData) {
+            globalHopesData = JSON.parse(savedData);
+          }
+          return globalHopesData;
+        } catch (error) {
+          console.error("Error loading from global system:", error);
+          return [];
         }
-
-        updateDisplay();
       }
 
-      // Update tampilan counter dan list
+      // Update display dengan performance optimization
       function updateDisplay() {
         const counterElement = document.getElementById("counter-number");
         const hopesListElement = document.getElementById("hopes-list");
 
         if (counterElement) {
-          counterElement.textContent = hopesData.length;
+          counterElement.textContent = globalHopesData.length;
         }
 
         if (hopesListElement) {
-          if (hopesData.length === 0) {
+          if (globalHopesData.length === 0) {
             hopesListElement.innerHTML = `
               <p style="
                 color: #9a2828;
@@ -1205,7 +1419,11 @@
               ">Belum ada harapan yang ditulis</p>
             `;
           } else {
-            hopesListElement.innerHTML = hopesData
+            // Untuk mobile, tampilkan maksimal 50 harapan terakhir
+            const displayData = isMobile
+              ? globalHopesData.slice(-50)
+              : globalHopesData;
+            hopesListElement.innerHTML = displayData
               .map(
                 (hope, index) => `
               <div style="
@@ -1239,8 +1457,34 @@
         }
       }
 
-      // Fungsi untuk mengirim data
-      function submitData() {
+      // Optimized submit function
+      // Google Sheets Integration
+      const GOOGLE_SHEETS_URL =
+        "https://script.google.com/macros/s/AKfycbzdCZkuwRH_9FjdS23C_0kHSUfV6sgsTkvXBOjEQe9BDf5-X1x8ExjXTFtIQT9UwTdtkQ/exec";
+
+      async function sendToGoogleSheets(data) {
+        try {
+          const form = new FormData();
+          for (const key in data) {
+            form.append(
+              key,
+              typeof data[key] === "object"
+                ? JSON.stringify(data[key])
+                : data[key]
+            );
+          }
+          await fetch(GOOGLE_SHEETS_URL, {
+            method: "POST",
+            body: form,
+          });
+          return true;
+        } catch (error) {
+          console.error("Error sending to Google Sheets:", error);
+          throw error;
+        }
+      }
+
+      async function submitData() {
         const nameInput = document.getElementById("frame16-input");
         const hopeInput = document.getElementById("frame16-input-2");
         const attendanceRadio = document.querySelector(
@@ -1248,71 +1492,96 @@
         );
         const submitBtn = document.getElementById("submit-btn");
 
-        // Validasi input
+        // Validation
         if (!nameInput.value.trim()) {
           alert("Mohon isi nama Anda!");
           nameInput.focus();
           return;
         }
-
         if (!hopeInput.value.trim()) {
           alert("Mohon isi harapan Anda!");
           hopeInput.focus();
           return;
         }
-
         if (!attendanceRadio) {
           alert("Mohon pilih konfirmasi kehadiran!");
           return;
         }
 
-        // Simpan data
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = "⏳ Menyimpan...";
+        submitBtn.style.background =
+          "linear-gradient(135deg, #f59e0b, #d97706)";
+        submitBtn.disabled = true;
+
+        // Data yang akan dikirim
         const newHope = {
+          id: generateUniqueId(),
           name: nameInput.value.trim(),
           message: hopeInput.value.trim(),
           attendance: attendanceRadio.value,
           timestamp: new Date().toISOString(),
+          date: new Date().toLocaleDateString("id-ID"),
+          time: new Date().toLocaleTimeString("id-ID"),
+          deviceInfo: {
+            userAgent: navigator.userAgent.substr(0, 100),
+            platform: navigator.platform,
+            isMobile: isMobile,
+          },
         };
 
-        hopesData.push(newHope);
-        localStorage.setItem("wedding-hopes", JSON.stringify(hopesData));
+        let googleSheetsSuccess = false;
+        let localStorageSuccess = false;
 
-        // Update tampilan
+        try {
+          submitBtn.innerHTML = "⏳ Menyimpan ke Google Sheets...";
+          await sendToGoogleSheets(newHope);
+          googleSheetsSuccess = true;
+        } catch (error) {
+          console.warn("Google Sheets save failed, using local backup:", error);
+        }
+
+        try {
+          submitBtn.innerHTML = "⏳ Menyimpan lokal...";
+          await saveGlobalData(newHope);
+          localStorageSuccess = true;
+        } catch (error) {
+          console.error("Local storage save failed:", error);
+        }
+
         updateDisplay();
 
-        // Feedback visual pada button
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = "✓ Terkirim!";
-        submitBtn.style.background =
-          "linear-gradient(135deg, #22c55e, #16a34a)";
-        submitBtn.disabled = true;
+        if (googleSheetsSuccess) {
+          submitBtn.innerHTML = "✅ Tersimpan ke Google Sheets!";
+          submitBtn.style.background =
+            "linear-gradient(135deg, #22c55e, #16a34a)";
+        } else if (localStorageSuccess) {
+          submitBtn.innerHTML = "⚠️ Tersimpan Lokal (Offline)";
+          submitBtn.style.background =
+            "linear-gradient(135deg, #f59e0b, #d97706)";
+        } else {
+          submitBtn.innerHTML = "❌ Gagal Menyimpan!";
+          submitBtn.style.background =
+            "linear-gradient(135deg, #dc2626, #b91c1c)";
+        }
 
-        // Reset form
-        nameInput.value = "";
-        hopeInput.value = "";
-        attendanceRadio.checked = false;
+        if (googleSheetsSuccess || localStorageSuccess) {
+          nameInput.value = "";
+          hopeInput.value = "";
+          document
+            .querySelectorAll('input[name="kehadiran"]')
+            .forEach((radio) => {
+              radio.checked = false;
+            });
+        }
 
-        // Reset button setelah 2 detik
         setTimeout(() => {
           submitBtn.innerHTML = originalText;
           submitBtn.style.background =
             "linear-gradient(135deg, #9a2828, #c53030)";
           submitBtn.disabled = false;
-        }, 2000);
+        }, 3000);
       }
-
-      // Event listeners
-      document.addEventListener("DOMContentLoaded", function () {
-        const attendanceRadios = document.querySelectorAll(
-          'input[name="kehadiran"]'
-        );
-
-        attendanceRadios.forEach((radio) => {
-          radio.addEventListener("change", saveAttendance);
-        });
-
-        loadData();
-      });
     </script>
   </body>
 </html>
