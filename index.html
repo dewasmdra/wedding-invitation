@@ -408,7 +408,7 @@
       </section>
       <section class="frame-section" id="frame-7" style="display: none">
         <video
-          src="Frame7-new.mp4"
+          src="frame7-new.mp4"
           id="video7"
           playsinline
           webkit-playsinline
@@ -1458,32 +1458,6 @@
       }
 
       // Optimized submit function
-      // Google Sheets Integration
-      const GOOGLE_SHEETS_URL =
-        "https://script.google.com/macros/s/AKfycbzdCZkuwRH_9FjdS23C_0kHSUfV6sgsTkvXBOjEQe9BDf5-X1x8ExjXTFtIQT9UwTdtkQ/exec";
-
-      async function sendToGoogleSheets(data) {
-        try {
-          const form = new FormData();
-          for (const key in data) {
-            form.append(
-              key,
-              typeof data[key] === "object"
-                ? JSON.stringify(data[key])
-                : data[key]
-            );
-          }
-          await fetch(GOOGLE_SHEETS_URL, {
-            method: "POST",
-            body: form,
-          });
-          return true;
-        } catch (error) {
-          console.error("Error sending to Google Sheets:", error);
-          throw error;
-        }
-      }
-
       async function submitData() {
         const nameInput = document.getElementById("frame16-input");
         const hopeInput = document.getElementById("frame16-input-2");
@@ -1498,31 +1472,32 @@
           nameInput.focus();
           return;
         }
+
         if (!hopeInput.value.trim()) {
           alert("Mohon isi harapan Anda!");
           hopeInput.focus();
           return;
         }
+
         if (!attendanceRadio) {
           alert("Mohon pilih konfirmasi kehadiran!");
           return;
         }
 
+        // Loading state
         const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = "⏳ Menyimpan...";
+        submitBtn.innerHTML = "⏳ Menyimpan Global...";
         submitBtn.style.background =
           "linear-gradient(135deg, #f59e0b, #d97706)";
         submitBtn.disabled = true;
 
-        // Data yang akan dikirim
+        // Create hope data
         const newHope = {
           id: generateUniqueId(),
           name: nameInput.value.trim(),
           message: hopeInput.value.trim(),
           attendance: attendanceRadio.value,
           timestamp: new Date().toISOString(),
-          date: new Date().toLocaleDateString("id-ID"),
-          time: new Date().toLocaleTimeString("id-ID"),
           deviceInfo: {
             userAgent: navigator.userAgent.substr(0, 100),
             platform: navigator.platform,
@@ -1530,51 +1505,33 @@
           },
         };
 
-        let googleSheetsSuccess = false;
-        let localStorageSuccess = false;
-
         try {
-          submitBtn.innerHTML = "⏳ Menyimpan ke Google Sheets...";
-          await sendToGoogleSheets(newHope);
-          googleSheetsSuccess = true;
-        } catch (error) {
-          console.warn("Google Sheets save failed, using local backup:", error);
-        }
-
-        try {
-          submitBtn.innerHTML = "⏳ Menyimpan lokal...";
           await saveGlobalData(newHope);
-          localStorageSuccess = true;
-        } catch (error) {
-          console.error("Local storage save failed:", error);
-        }
 
-        updateDisplay();
+          // Update display
+          updateDisplay();
 
-        if (googleSheetsSuccess) {
-          submitBtn.innerHTML = "✅ Tersimpan ke Google Sheets!";
+          // Success feedback
+          submitBtn.innerHTML = "✅ Tersimpan Global!";
           submitBtn.style.background =
             "linear-gradient(135deg, #22c55e, #16a34a)";
-        } else if (localStorageSuccess) {
-          submitBtn.innerHTML = "⚠️ Tersimpan Lokal (Offline)";
-          submitBtn.style.background =
-            "linear-gradient(135deg, #f59e0b, #d97706)";
-        } else {
-          submitBtn.innerHTML = "❌ Gagal Menyimpan!";
+
+          // Reset form
+          nameInput.value = "";
+          hopeInput.value = "";
+          attendanceRadio.checked = false;
+
+          console.log("Hope saved successfully to global system!");
+        } catch (error) {
+          console.error("Error saving hope:", error);
+
+          // Error feedback
+          submitBtn.innerHTML = "❌ Gagal! Coba Lagi";
           submitBtn.style.background =
             "linear-gradient(135deg, #dc2626, #b91c1c)";
         }
 
-        if (googleSheetsSuccess || localStorageSuccess) {
-          nameInput.value = "";
-          hopeInput.value = "";
-          document
-            .querySelectorAll('input[name="kehadiran"]')
-            .forEach((radio) => {
-              radio.checked = false;
-            });
-        }
-
+        // Reset button
         setTimeout(() => {
           submitBtn.innerHTML = originalText;
           submitBtn.style.background =
@@ -1582,6 +1539,16 @@
           submitBtn.disabled = false;
         }, 3000);
       }
+
+      // Load data on page load
+      document.addEventListener("DOMContentLoaded", async function () {
+        try {
+          await loadGlobalData();
+          updateDisplay();
+        } catch (error) {
+          console.error("Error loading data:", error);
+        }
+      });
     </script>
   </body>
 </html>
