@@ -1127,6 +1127,55 @@
         window.addEventListener("wheel", throttledWheel, { passive: true });
       }
 
+      // Fungsi scroll/swipe untuk frame terakhir (hanya bisa mundur)
+      function enableScrollToGoBack(idx) {
+        let startY = null;
+        let isNavigating = false;
+
+        const throttledTouchStart = throttle((e) => {
+          if (!isNavigating) {
+            startY = e.touches ? e.touches[0].clientY : e.clientY;
+          }
+        }, 50);
+
+        const throttledTouchEnd = throttle((e) => {
+          if (isNavigating) return;
+
+          let endY = e.changedTouches ? e.changedTouches[0].clientY : e.clientY;
+          if (startY !== null && endY - startY > 50 && idx > 0) {
+            // Swipe down untuk kembali ke frame sebelumnya
+            isNavigating = true;
+            removeScrollListeners();
+            goToSection(idx - 1);
+          }
+        }, 100);
+
+        const throttledWheel = throttle((e) => {
+          if (isNavigating) return;
+
+          if (e.deltaY < -30 && idx > 0) {
+            // Scroll up untuk kembali ke frame sebelumnya
+            isNavigating = true;
+            removeScrollListeners();
+            goToSection(idx - 1);
+          }
+        }, 100);
+
+        function removeScrollListeners() {
+          window.removeEventListener("touchstart", throttledTouchStart);
+          window.removeEventListener("touchend", throttledTouchEnd);
+          window.removeEventListener("wheel", throttledWheel);
+        }
+
+        window.addEventListener("touchstart", throttledTouchStart, {
+          passive: true,
+        });
+        window.addEventListener("touchend", throttledTouchEnd, {
+          passive: true,
+        });
+        window.addEventListener("wheel", throttledWheel, { passive: true });
+      }
+
       function goToSection(idx) {
         if (idx < 0 || idx >= sections.length) return;
 
@@ -1170,6 +1219,9 @@
           enableScrollToContinueForward(2);
         } else if (currentSection > 1 && currentSection < sections.length - 1) {
           enableScrollToNavigate(currentSection);
+        } else if (currentSection === sections.length - 1) {
+          // Frame terakhir (frame-18) - hanya bisa kembali ke frame sebelumnya
+          enableScrollToGoBack(currentSection);
         }
 
         // Handle overlay video untuk frame-14a
