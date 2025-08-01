@@ -240,6 +240,46 @@
             z-index: 3;
           "
         >
+          <!-- Teks Nama Tamu -->
+          <div
+            id="guest-name-container"
+            style="
+              text-align: center;
+              margin-bottom: 12px;
+              padding: 10px 15px;
+              border-radius: 15px;
+              max-width: 280px;
+              width: 90%;
+            "
+          >
+            <p
+              style="
+                color: #fff0b4;
+                font-size: 14px;
+                font-family: sans-serif;
+                margin: 0 0 5px 0;
+                font-weight: 500;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+              "
+            >
+              Kepada Yth.
+            </p>
+            <p
+              id="guest-name-display"
+              style="
+                color: #fff0b4;
+                font-size: 15px;
+                font-family: sans-serif;
+                margin: 0;
+                font-weight: bold;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+                letter-spacing: 0.5px;
+              "
+            >
+              Tamu Terhormat
+            </p>
+          </div>
+
           <button
             id="open-invitation-btn"
             onclick="openInvitation()"
@@ -509,7 +549,11 @@
           "
         ></a>
       </section>
-      <section class="frame-section" id="frame-10" style="display: none">
+      <section
+        class="frame-section"
+        id="frame-10"
+        style="display: none; position: relative"
+      >
         <video
           src="frame10.mp4"
           id="video10"
@@ -518,6 +562,62 @@
           loop
           preload="auto"
         ></video>
+
+        <!-- Button Instagram transparan untuk frame-10 -->
+        <div
+          style="
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 40px;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: rgba(0, 0, 0, 0);
+            transition: all 0.3s ease;
+            border-radius: 12px;
+          "
+          onclick="openInstagramLink()"
+          onmouseover="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.border='1px solid rgba(255, 255, 255, 0.2)'"
+          onmouseout="this.style.background='rgba(0, 0, 0, 0)'; this.style.border='none'"
+          ontouchstart="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.border='1px solid rgba(255, 255, 255, 0.3)'"
+          ontouchend="this.style.background='rgba(0, 0, 0, 0)'; this.style.border='none'"
+        >
+          <!-- Icon Instagram dengan desain rectangular -->
+          <div
+            style="
+              background: rgba(255, 255, 255, 0.1);
+              border: 2px solid rgba(255, 255, 255, 0.3);
+              border-radius: 8px;
+              width: 180px;
+              height: 35px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              backdrop-filter: blur(10px);
+              opacity: 0.7;
+              transition: all 0.3s ease;
+              gap: 8px;
+            "
+          >
+            <span style="color: rgba(255, 255, 255, 0.9); font-size: 16px"
+              >📷</span
+            >
+            <span
+              style="
+                color: rgba(255, 255, 255, 0.9);
+                font-size: 12px;
+                font-family: sans-serif;
+                font-weight: 500;
+              "
+              >Instagram Story</span
+            >
+          </div>
+        </div>
       </section>
       <section class="frame-section" id="frame-11" style="display: none">
         <video
@@ -1242,6 +1342,45 @@
         if (i !== 0) s.style.display = "none";
       });
       videos[0].play();
+
+      // Fungsi untuk mengambil nama tamu dari URL parameter
+      function getGuestNameFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const guestName =
+          urlParams.get("nama") ||
+          urlParams.get("guest") ||
+          urlParams.get("to");
+        return guestName
+          ? decodeURIComponent(guestName.replace(/\+/g, " "))
+          : null;
+      }
+
+      // Fungsi untuk menampilkan nama tamu
+      function displayGuestName() {
+        const guestNameDisplay = document.getElementById("guest-name-display");
+        const guestName = getGuestNameFromURL();
+
+        if (guestName) {
+          guestNameDisplay.textContent = guestName;
+          // Animasi fade in untuk nama tamu
+          const container = document.getElementById("guest-name-container");
+          container.style.opacity = "0";
+          container.style.transform = "translateY(20px)";
+
+          setTimeout(() => {
+            container.style.transition = "all 0.8s ease";
+            container.style.opacity = "1";
+            container.style.transform = "translateY(0)";
+          }, 500);
+        } else {
+          // Jika tidak ada nama di URL, tampilkan default atau sembunyikan
+          guestNameDisplay.textContent = "Tamu Terhormat";
+        }
+      }
+
+      // Panggil fungsi saat halaman dimuat
+      displayGuestName();
+
       // Countdown pada frame-4
       // Ganti tanggal di bawah sesuai tanggal acara (format: YYYY-MM-DDTHH:MM:SS)
       const countdownTarget = new Date("2025-08-10T10:00:00");
@@ -1457,6 +1596,15 @@
           ensureMusicPlaying();
         }, 100);
       };
+
+      // Fungsi untuk membuka link Instagram
+      function openInstagramLink() {
+        const instagramURL =
+          "https://www.instagram.com/s/aGlnaGxpZ2h0OjE3OTE1MDgyMzM5MDM3NTU3?story_media_id=3688633101678478733&igsh=MWpqZnFrb3R0NG5haA==";
+
+        // Buka link di tab/window baru
+        window.open(instagramURL, "_blank");
+      }
     </script>
     <script>
       // GANTI URL DI BAWAH INI DENGAN URL ENDPOINT ANDA DARI SHEETY
